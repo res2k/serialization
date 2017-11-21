@@ -142,7 +142,7 @@ xml_woarchive_impl<Archive>::~xml_woarchive_impl(){
     if(std::uncaught_exception())
         return;
     if(0 == (this->get_flags() & no_header)){
-        os << L"</boost_serialization>";
+        this->windup();
     }
 }
 
