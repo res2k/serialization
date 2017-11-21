@@ -109,7 +109,7 @@ private:
         // use a wrapper so that types T with protected constructors
         // can be used
         class singleton_wrapper : public T {};
-        static singleton_wrapper t;
+        static singleton_wrapper* t;
         // refer to instance, causing it to be instantiated (and
         // initialized at startup on working compilers)
         BOOST_ASSERT(! is_destroyed());
@@ -121,7 +121,8 @@ private:
         // our usage/implementation of "locking" and introduce uncertainty into
         // the sequence of object initializaition.
         use(& m_instance);
-        return static_cast<T &>(t);
+        if (!t) t = new singleton_wrapper;
+        return static_cast<T &>(*t);
     }
     static bool & get_is_destroyed(){
         static bool is_destroyed;
@@ -144,6 +145,9 @@ public:
         unlock();
     }
     ~singleton() {
+        if (!get_is_destroyed()) {
+            delete &(get_instance());
+        }
         get_is_destroyed() = true;
     }
 };
