@@ -109,6 +109,11 @@ private:
         // use a wrapper so that types T with protected constructors
         // can be used
         class singleton_wrapper : public T {};
+        // Use a heap-allocated instance to work around static variable
+        // destruction order issues: this inner singleton_wrapper<>
+        // instance may be destructed before the singleton<> instance.
+        // Using a 'dumb' static variable lets us precisely choose the
+        // time destructor is invoked.
         static singleton_wrapper* t;
         // refer to instance, causing it to be instantiated (and
         // initialized at startup on working compilers)
