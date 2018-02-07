@@ -112,20 +112,55 @@ template <class T>
 class singleton : public singleton_module
 {
 private:
-    static T & m_instance;
+    static void cleanup_func() {
+        delete static_cast<singleton_wrapper*> (&get_instance());
+    }
+
+    // use a wrapper so that types T with protected constructors
+    // can be used
+    class singleton_wrapper : public T {
+    public:
+        singleton_wrapper () {
+        #if !defined(BOOST_ALL_DYN_LINK) && !defined(BOOST_SERIALIZATION_DYN_LINK)
+            /* Static builds: We're in a single module, use atexit() to
+             * ensure destruction in reverse of construction.
+             * (In static builds the compiler-generated order may be wrong...) */
+            atexit(&cleanup_func);
+        #endif
+        }
+    };
+
+    /* This wrapper ensures the instance is cleaned up when the
+     * module is wound down. (The cleanup of the static variable
+     * in get_instance() may happen at the wrong time.) */
+    struct instance_and_cleanup
+    {
+        T& x;
+
+        instance_and_cleanup(T& x) : x(x) {
+        }
+        ~instance_and_cleanup() {
+        #if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_SERIALIZATION_DYN_LINK)
+            /* Shared builds: The ordering through global variables is
+             * sufficient.
+             * However, avoid atexit() as it may cause destruction order
+             * issues here. */
+            singleton<T>::cleanup_func();
+        #endif
+        }
+    };
+    static instance_and_cleanup m_instance_and_cleanup;
     // include this to provoke instantiation at pre-execution time
     static void use(T const *) {}
     static T & get_instance() {
-        // use a wrapper so that types T with protected constructors
-        // can be used
-        class singleton_wrapper : public T {};
-
         // Use a heap-allocated instance to work around static variable
         // destruction order issues: this inner singleton_wrapper<>
         // instance may be destructed before the singleton<> instance.
         // Using a 'dumb' static variable lets us precisely choose the
         // time destructor is invoked.
-        static singleton_wrapper *t = 0;
+        // The destruction itself is handled by m_instance_cleanup (for
+        // shared builds) or in an atexit() function (static builds).
+        static singleton_wrapper* t = new singleton_wrapper;
 
         // refer to instance, causing it to be instantiated (and
         // initialized at startup on working compilers)
@@ -136,10 +171,7 @@ private:
         // construct the instance at pre-execution time.  This would prevent
         // our usage/implementation of "locking" and introduce uncertainty into
         // the sequence of object initializaition.
-        use(& m_instance);
-
-        if (!t)
-            t = new singleton_wrapper;
+        use(& m_instance_and_cleanup.x);
         return static_cast<T &>(*t);
     }
     static bool & get_is_destroyed(){
@@ -162,15 +194,13 @@ public:
         get_is_destroyed() = false;
     }
     BOOST_DLLEXPORT ~singleton() {
-        if (!get_is_destroyed()) {
-            delete &(get_instance());
-        }
         get_is_destroyed() = true;
     }
 };
 
 template<class T>
-T & singleton< T >::m_instance = singleton< T >::get_instance();
+typename singleton< T >::instance_and_cleanup singleton< T >::m_instance_and_cleanup (
+    singleton< T >::get_instance());
 
 } // namespace serialization
 } // namespace boost
