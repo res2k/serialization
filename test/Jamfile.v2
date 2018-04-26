@@ -139,6 +139,7 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ test-bsl-run test_iterators_base64 ]
         [ test-bsl-run test_smart_cast ]
         [ test-bsl-run test_codecvt_null ]
+        [ test-bsl-run test_singleton ]
         
         # [ test-bsl-run test_z ]
 
