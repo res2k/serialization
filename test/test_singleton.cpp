@@ -18,9 +18,7 @@ test1(const x & x1, const x & x2){
     BOOST_CHECK(& x1 == & x2);
 }
 
-int
-test_main( int /* argc */, char* /* argv */[] )
-{
+void test_same_instance(){
     const x & x1 = boost::serialization::singleton<x>::get_const_instance();
     const x & x2 = boost::serialization::singleton<x>::get_const_instance();
 
@@ -30,6 +28,11 @@ test_main( int /* argc */, char* /* argv */[] )
         boost::serialization::singleton<x>::get_const_instance(),
         boost::serialization::singleton<x>::get_const_instance()
     );
+};
 
+int
+test_main( int /* argc */, char* /* argv */[] )
+{
+    test_same_instance();
     return EXIT_SUCCESS;
 }
