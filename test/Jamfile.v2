@@ -148,7 +148,7 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ test-bsl-run test_smart_cast ]
         [ test-bsl-run test_codecvt_null : : ../build//boost_wserialization ]
         [ test-bsl-run test_singleton ]
-
+        [ test-bsl-run test_singleton_instance ]
         # [ test-bsl-run test_z ]
 
         # should fail compilation
