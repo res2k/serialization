@@ -73,11 +73,11 @@ install:
   - git submodule update
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\serialization
   - set PATH=C:\mingw-w64\i686-6.3.0-posix-dwarf-rt_v5-rev1\mingw32\bin;%CD%;%PATH%
-  - bootstrap gcc
+  - bootstrap %BUILD_TOOLSET%
   - b2 headers
 
 build: off
 
 test_script:
   - cd libs/serialization/test
-  - b2 -j2 toolset=%BUILD_TOOLSET% link=%BUILD_LINK%
+  - b2 -j2 toolset=%BUILD_TOOLSET% link=%BUILD_LINK% variant=debug,release

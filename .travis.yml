@@ -27,6 +27,11 @@ matrix:
       env: TOOLSET=gcc
 
     - os: linux
+      compiler: g++
+      env: TOOLSET=gcc LINK=static
+
+    - &linux_gcc5
+      os: linux
       compiler: g++-5
       env: TOOLSET=gcc-5
       addons:
@@ -36,7 +41,11 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
 
-    - os: linux
+    - <<: *linux_gcc5
+      env: TOOLSET=gcc-5 LINK=static
+
+    - &linux_gcc6
+      os: linux
       compiler: g++-6
       env: TOOLSET=gcc-6
       addons:
@@ -46,7 +55,11 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
 
-    - os: linux
+    - <<: *linux_gcc6
+      env: TOOLSET=gcc-6 LINK=static
+
+    - &linux_gcc7
+      os: linux
       compiler: g++-7
       env: TOOLSET=gcc-7
       addons:
@@ -56,15 +69,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
 
-    - os: linux
-      compiler: g++-7
+    - <<: *linux_gcc7
       env: TOOLSET=gcc-7 LINK=static
-      addons:
-        apt:
-          packages:
-            - g++-7
-          sources:
-            - ubuntu-toolchain-r-test
 
     - os: linux
       compiler: clang++
@@ -96,7 +102,7 @@ install:
   - ./b2 headers
 
 script:
-  - ./b2 -j 3 libs/serialization/test toolset=$TOOLSET link=${LINK:-shared}
+  - ./b2 -j 3 libs/serialization/test toolset=$TOOLSET link=${LINK:-shared} variant=debug,release
 
 notifications:
   email:
