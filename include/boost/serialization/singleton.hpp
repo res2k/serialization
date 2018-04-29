@@ -114,6 +114,7 @@ class singleton : public singleton_module
 private:
     static void cleanup_func() {
         delete static_cast<singleton_wrapper*> (&get_instance());
+        get_is_destroyed() = true;
     }
 
     // use a wrapper so that types T with protected constructors
@@ -138,6 +139,7 @@ private:
         T& x;
 
         instance_and_cleanup(T& x) : x(x) {
+            get_is_destroyed() = false;
         }
         ~instance_and_cleanup() {
         #if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_SERIALIZATION_DYN_LINK)
@@ -191,10 +193,8 @@ public:
         return get_is_destroyed();
     }
     BOOST_DLLEXPORT singleton(){
-        get_is_destroyed() = false;
     }
-    BOOST_DLLEXPORT ~singleton() {
-        get_is_destroyed() = true;
+    BOOST_DLLEXPORT ~singleton(){
     }
 };
 
