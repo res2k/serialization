@@ -7,7 +7,20 @@
 #ifndef BOOST_SERIALIZATION_TEST_SINGLETON_LIB_HPP
 #define BOOST_SERIALIZATION_TEST_SINGLETON_LIB_HPP
 
+#if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_SERIALIZATION_DYN_LINK)
+    #if defined(SINGLETON_LIB_IMPORT)
+        #define SINGLETON_LIB_DLL_DECL BOOST_SYMBOL_IMPORT
+        #pragma message ("singleton_lib imported")
+    #elif defined(SINGLETON_LIB_EXPORT)
+        #define SINGLETON_LIB_DLL_DECL BOOST_SYMBOL_EXPORT
+        #pragma message ("singleton_lib exported")
+    #endif
+#else
+    #define SINGLETON_LIB_DLL_DECL
+    #pragma message ("singleton_lib static")
+#endif
+
 // Simple method that should return 0
-int singleton_lib_query();
+SINGLETON_LIB_DLL_DECL int singleton_lib_query();
 
 #endif // BOOST_SERIALIZATION_TEST_SINGLETON_LIB_HPP
