@@ -114,7 +114,6 @@ class singleton : public singleton_module
 private:
     static void cleanup_func() {
         delete static_cast<singleton_wrapper*> (&get_instance());
-        get_is_destroyed() = true;
     }
 
     // use a wrapper so that types T with protected constructors
@@ -122,12 +121,20 @@ private:
     class singleton_wrapper : public T {
     public:
         singleton_wrapper () {
+            get_is_destroyed() = false;
         #if !defined(BOOST_ALL_DYN_LINK) && !defined(BOOST_SERIALIZATION_DYN_LINK)
             /* Static builds: We're in a single module, use atexit() to
              * ensure destruction in reverse of construction.
              * (In static builds the compiler-generated order may be wrong...) */
             atexit(&cleanup_func);
         #endif
+        }
+        ~singleton_wrapper () {
+            get_is_destroyed() = true;
+        }
+        static bool & get_is_destroyed(){
+            static bool is_destroyed;
+            return is_destroyed;
         }
     };
 
@@ -139,7 +146,6 @@ private:
         T& x;
 
         instance_and_cleanup(T& x) : x(x) {
-            get_is_destroyed() = false;
         }
         ~instance_and_cleanup() {
         #if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_SERIALIZATION_DYN_LINK)
@@ -177,8 +183,7 @@ private:
         return static_cast<T &>(*t);
     }
     static bool & get_is_destroyed(){
-        static bool is_destroyed;
-        return is_destroyed;
+        return singleton_wrapper::get_is_destroyed();
     }
 
 public:
