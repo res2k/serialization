@@ -77,6 +77,30 @@ matrix:
       compiler: clang++
       env: TOOLSET=clang LINK=static
 
+    - os: linux
+      compiler: clang++-6
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+          packages:
+            - clang-6.0
+            - libstdc++-7-dev
+      env: TOOLSET=clang
+
+    - os: linux
+      compiler: clang++-6
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+          packages:
+            - clang-6.0
+            - libstdc++-7-dev
+      env: TOOLSET=clang LINK=static
+
     - os: osx
       compiler: clang++
       env: TOOLSET=clang
