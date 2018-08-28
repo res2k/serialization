@@ -1,5 +1,5 @@
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
-// test_singleton.cpp
+// test_singleton_instance.cpp
 
 // (C) Copyright 2018 Robert Ramey - http://www.rrsd.com . 
 // Use, modification and distribution is subject to the Boost Software
@@ -43,7 +43,6 @@ struct C {
 };
 
 struct D {
-    int m_id;
     D(){
         // verify that only one object is indeed created
         const C & c = boost::serialization::singleton<C>::get_const_instance();
@@ -57,12 +56,6 @@ struct D {
         const A & a = boost::serialization::singleton<A>::get_const_instance();
         BOOST_CHECK_EQUAL(a.m_id, 3);
         std::cout << a.m_id << b.m_id << c.m_id << '\n';
-
-        m_id = ++i;
-    }
-    ~D(){
-        // verify that objects are destroyed in sequence reverse of construction
-        if(i-- != m_id) std::terminate();
     }
 };
 
