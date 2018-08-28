@@ -68,6 +68,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT(polymorphic_derived1)
 BOOST_SERIALIZATION_MWERKS_BASE_AND_DERIVED(polymorphic_base, polymorphic_derived1)
 
 #define POLYMORPHIC_DERIVED2_IMPORT
+#define POLYMORPHIC_DERIVED2_EXTERNAL_DEF
 #include "polymorphic_derived2.hpp"
 
 // save exported polymorphic class

@@ -16,7 +16,11 @@
 #include "polymorphic_base.hpp"
 
 #define POLYMORPHIC_DERIVED2_EXPORT
+#define POLYMORPHIC_DERIVED2_EXTERNAL_DEF
 #include "polymorphic_derived2.hpp"
+
+polymorphic_derived2::polymorphic_derived2(){}
+polymorphic_derived2::~polymorphic_derived2(){}
 
 // instantiate code for text archives
 #include <boost/archive/text_oarchive.hpp>
