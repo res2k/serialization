@@ -112,14 +112,23 @@ template <class T>
 class singleton : public singleton_module
 {
 private:
-    static T & m_instance;
+    class singleton_wrapper : public T { };
+    struct instance_holder
+    {
+        singleton_wrapper* m_p;
+
+        instance_holder(singleton_wrapper* x) : m_p (x) {
+            get_is_destroyed() = false;
+        }
+        ~instance_holder() {
+            delete m_p;
+            get_is_destroyed() = true;
+        }
+    };
+    static instance_holder m_instance;
     // include this to provoke instantiation at pre-execution time
-    static void use(T const *) {}
-    static T & get_instance() {
-        // use a wrapper so that types T with protected constructors
-        // can be used
-        class singleton_wrapper : public T {};
-        static singleton_wrapper t;
+    static void use(instance_holder const *) {}
+    static singleton_wrapper* get_instance() {
 
         // refer to instance, causing it to be instantiated (and
         // initialized at startup on working compilers)
@@ -132,7 +141,12 @@ private:
         // the sequence of object initializaition.
         use(& m_instance);
 
-        return static_cast<T &>(t);
+        if (!m_instance.m_p) {
+            static singleton_wrapper* t = new singleton_wrapper; // make use of thread-safe statics
+            m_instance.m_p = t;
+        }
+
+        return m_instance.m_p;
     }
     static bool & get_is_destroyed(){
         static bool is_destroyed;
@@ -142,10 +156,10 @@ private:
 public:
     BOOST_DLLEXPORT static T & get_mutable_instance(){
         BOOST_ASSERT(! is_locked());
-        return get_instance();
+        return *get_instance();
     }
     BOOST_DLLEXPORT static const T & get_const_instance(){
-        return get_instance();
+        return *get_instance();
     }
     BOOST_DLLEXPORT static bool is_destroyed(){
         return get_is_destroyed();
@@ -159,7 +173,7 @@ public:
 };
 
 template<class T>
-T & singleton< T >::m_instance = singleton< T >::get_instance();
+typename singleton< T >::instance_holder singleton< T >::m_instance = singleton< T >::get_instance();
 
 } // namespace serialization
 } // namespace boost
