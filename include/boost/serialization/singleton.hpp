@@ -164,12 +164,6 @@ public:
     BOOST_DLLEXPORT static bool is_destroyed(){
         return get_is_destroyed();
     }
-    BOOST_DLLEXPORT singleton(){
-        get_is_destroyed() = false;
-    }
-    BOOST_DLLEXPORT ~singleton() {
-        get_is_destroyed() = true;
-    }
 };
 
 template<class T>
