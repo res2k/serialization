@@ -151,7 +151,7 @@ public:
 #endif
 
 template <class Derived, class Base>
-class BOOST_SYMBOL_VISIBLE void_caster_primitive :
+class BOOST_SERIALIZATION_PRIVATE void_caster_primitive :
     public void_caster
 {
     virtual void const * downcast(void const * const t) const {

@@ -68,7 +68,7 @@ public:
 } // no_rtti_system
 
 template<class T>
-class extended_type_info_no_rtti : 
+class BOOST_SERIALIZATION_PRIVATE extended_type_info_no_rtti :
     public no_rtti_system::extended_type_info_no_rtti_0,
     public singleton<extended_type_info_no_rtti< T > >
 {

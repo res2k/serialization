@@ -71,6 +71,8 @@
 
 #include <boost/core/addressof.hpp>
 
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+
 namespace boost {
 
 namespace serialization {
@@ -108,7 +110,7 @@ private:
     // private constructor to inhibit any existence other than the 
     // static one
 public:
-    explicit BOOST_DLLEXPORT oserializer() :
+    explicit BOOST_SERIALIZATION_PRIVATE oserializer() :
         basic_oserializer(
             boost::serialization::singleton<
                 typename 
@@ -541,5 +543,7 @@ inline void save(Archive & ar, /*const*/ T &t){
 
 } // namespace archive
 } // namespace boost
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 #endif // BOOST_ARCHIVE_OSERIALIZER_HPP

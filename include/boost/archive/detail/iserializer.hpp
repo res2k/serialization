@@ -91,6 +91,8 @@ namespace std{
 
 #include <boost/core/addressof.hpp>
 
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+
 namespace boost {
 
 namespace serialization {
@@ -125,7 +127,7 @@ private:
     }
 protected:
     // protected constructor since it's always created by singleton
-    explicit iserializer() :
+    explicit BOOST_SERIALIZATION_PRIVATE iserializer() :
         basic_iserializer(
             boost::serialization::singleton<
                 typename 
@@ -628,5 +630,7 @@ inline void load(Archive & ar, T &t){
 
 } // namespace archive
 } // namespace boost
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 #endif // BOOST_ARCHIVE_DETAIL_ISERIALIZER_HPP

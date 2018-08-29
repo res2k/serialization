@@ -78,7 +78,7 @@ public:
 } // typeid_system
 
 template<class T>
-class extended_type_info_typeid : 
+class BOOST_SERIALIZATION_PRIVATE extended_type_info_typeid :
     public typeid_system::extended_type_info_typeid_0,
     public singleton<extended_type_info_typeid< T > >
 {
