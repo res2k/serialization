@@ -40,7 +40,7 @@
 namespace boost { 
 namespace serialization { 
 
-class BOOST_SYMBOL_VISIBLE extended_type_info;
+class BOOST_SYMBOL_VISIBLE_FWD extended_type_info;
 
 // Given a void *, assume that it really points to an instance of one type
 // and alter it so that it would point to an instance of a related type.

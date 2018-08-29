@@ -22,10 +22,17 @@
 #  define BOOST_SERIALIZATION_HAVE_PRAGMA_VISIBILITY
 #  define BOOST_SERIALIZATION_PRIVATE       __attribute__((__visibility__("hidden")))
 #  define BOOST_SERIALIZATION_VISIBLE       __attribute__((__visibility__("default")))
+/* Clang wants forward declarations to have same visibility attribute as actual declaration,
+ * gcc throws a warning in that case */
+#  define BOOST_SYMBOL_VISIBLE_FWD          BOOST_SYMBOL_VISIBLE
 #endif
 
 #ifndef BOOST_SERIALIZATION_PRIVATE
 #  define BOOST_SERIALIZATION_PRIVATE
+#endif
+
+#ifndef BOOST_SYMBOL_VISIBLE_FWD
+#  define BOOST_SYMBOL_VISIBLE_FWD
 #endif
 
 #endif // BOOST_ARCHIVE_DETAIL_VISIBILITY_HPP

@@ -27,7 +27,7 @@
 namespace boost {
 
 namespace serialization {
-    class BOOST_SYMBOL_VISIBLE extended_type_info;
+    class BOOST_SYMBOL_VISIBLE_FWD extended_type_info;
 } // namespace serialization
 
 namespace archive {
