@@ -26,7 +26,7 @@
 
 namespace boost { 
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SYMBOL_VISIBLE extended_type_info;
 }
 
 namespace archive {

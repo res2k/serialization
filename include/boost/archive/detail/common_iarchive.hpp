@@ -31,7 +31,7 @@ namespace boost {
 namespace archive {
 namespace detail {
 
-class extended_type_info;
+class BOOST_SYMBOL_VISIBLE extended_type_info;
 
 // note: referred to as Curiously Recurring Template Patter (CRTP)
 template<class Archive>

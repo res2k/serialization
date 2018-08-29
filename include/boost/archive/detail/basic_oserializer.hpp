@@ -33,15 +33,15 @@
 
 namespace boost {
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SYMBOL_VISIBLE extended_type_info;
 } // namespace serialization
 
 // forward declarations
 namespace archive {
 namespace detail {
 
-class basic_oarchive;
-class basic_pointer_oserializer;
+class BOOST_SYMBOL_VISIBLE basic_oarchive;
+class BOOST_SYMBOL_VISIBLE basic_pointer_oserializer;
 
 class BOOST_SYMBOL_VISIBLE basic_oserializer :
     public basic_serializer

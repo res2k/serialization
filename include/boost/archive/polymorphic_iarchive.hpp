@@ -39,15 +39,15 @@ namespace std{
 
 namespace boost {
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SYMBOL_VISIBLE extended_type_info;
 } // namespace serialization
 namespace archive {
 namespace detail {
-    class basic_iarchive;
+    class BOOST_SYMBOL_VISIBLE basic_iarchive;
     class basic_iserializer;
 }
 
-class polymorphic_iarchive;
+class BOOST_SYMBOL_VISIBLE polymorphic_iarchive;
 
 class BOOST_SYMBOL_VISIBLE polymorphic_iarchive_impl :
     public detail::interface_iarchive<polymorphic_iarchive>

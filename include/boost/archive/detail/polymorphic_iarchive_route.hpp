@@ -34,7 +34,7 @@ namespace std{
 
 namespace boost {
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SYMBOL_VISIBLE extended_type_info;
 } // namespace serialization
 namespace archive {
 namespace detail{
@@ -48,7 +48,7 @@ class basic_pointer_iserializer;
 #endif
 
 template<class ArchiveImplementation>
-class polymorphic_iarchive_route :
+class BOOST_SYMBOL_VISIBLE polymorphic_iarchive_route :
     public polymorphic_iarchive,
     // note: gcc dynamic cross cast fails if the the derivation below is
     // not public.  I think this is a mistake.
