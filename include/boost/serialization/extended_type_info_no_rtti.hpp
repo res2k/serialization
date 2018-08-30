@@ -36,7 +36,7 @@
 // hijack serialization access
 #include <boost/serialization/access.hpp>
 
-#include <boost/config/abi_prefix.hpp> // must be the last header
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4251 4231 4660 4275 4511 4512)
@@ -177,6 +177,6 @@ public:
 #ifdef BOOST_MSVC
 #  pragma warning(pop)
 #endif
-#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+#include <boost/archive/detail/abi_suffix.hpp> // pops abi_prefix.hpp pragmas
 
 #endif // BOOST_EXTENDED_TYPE_INFO_NO_RTTI_HPP

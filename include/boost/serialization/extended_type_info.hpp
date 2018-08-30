@@ -26,7 +26,7 @@
 #include <boost/mpl/bool.hpp>
 
 #include <boost/serialization/config.hpp>
-#include <boost/config/abi_prefix.hpp> // must be the last header
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4251 4231 4660 4275)
@@ -111,6 +111,6 @@ inline const char * guid(){
 #pragma warning(pop)
 #endif
 
-#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+#include <boost/archive/detail/abi_suffix.hpp> // pops abi_prefix.hpp pragmas
 
 #endif // BOOST_SERIALIZATION_EXTENDED_TYPE_INFO_HPP

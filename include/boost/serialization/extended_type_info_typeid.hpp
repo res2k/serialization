@@ -38,7 +38,7 @@
 
 #include <boost/mpl/if.hpp>
 
-#include <boost/config/abi_prefix.hpp> // must be the last header
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 #ifdef BOOST_MSVC
 #  pragma warning(push)
@@ -162,6 +162,6 @@ public:
 #ifdef BOOST_MSVC
 #pragma warning(pop)
 #endif
-#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+#include <boost/archive/detail/abi_suffix.hpp> // pops abi_prefix.hpp pragmas
 
 #endif // BOOST_SERIALIZATION_EXTENDED_TYPE_INFO_TYPEID_HPP
