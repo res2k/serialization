@@ -17,6 +17,7 @@
 
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+#include <boost/archive/detail/visibility.hpp>
 
 // note: this version incorporates the related code into the the 
 // the same library as BOOST_ARCHIVE.  This could change some day in the
@@ -38,6 +39,8 @@
     // export if this is our own source, otherwise import:
     #if defined(BOOST_SERIALIZATION_SOURCE)
         #define BOOST_SERIALIZATION_DECL BOOST_SYMBOL_EXPORT
+    #elif defined(BOOST_SERIALIZATION_VISIBLE)
+        #define BOOST_SERIALIZATION_DECL BOOST_SERIALIZATION_VISIBLE
     #else
         #define BOOST_SERIALIZATION_DECL BOOST_SYMBOL_IMPORT
     #endif // defined(BOOST_SERIALIZATION_SOURCE)
