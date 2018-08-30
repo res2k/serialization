@@ -118,7 +118,16 @@ private:
     static T & get_instance() {
         // use a wrapper so that types T with protected constructors
         // can be used
-        class singleton_wrapper : public T {};
+        class singleton_wrapper : public T
+        {
+        public:
+            singleton_wrapper() {
+                get_is_destroyed() = false;
+            }
+            ~singleton_wrapper() {
+                get_is_destroyed() = true;
+            }
+        };
         static singleton_wrapper t;
 
         // refer to instance, causing it to be instantiated (and
