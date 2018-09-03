@@ -31,7 +31,7 @@ namespace boost {
 namespace archive {
 namespace detail {
 
-class BOOST_SYMBOL_VISIBLE_FWD extended_type_info;
+class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 
 // note: referred to as Curiously Recurring Template Patter (CRTP)
 template<class Archive>

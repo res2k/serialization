@@ -30,7 +30,7 @@
 
 namespace boost {
 namespace serialization {
-    class BOOST_SYMBOL_VISIBLE_FWD extended_type_info;
+    class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 } // namespace serialization
 
 // forward declarations

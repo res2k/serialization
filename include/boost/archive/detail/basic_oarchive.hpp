@@ -22,13 +22,14 @@
 #include <boost/scoped_ptr.hpp>
 
 #include <boost/archive/basic_archive.hpp>
+#include <boost/serialization/config.hpp>
 #include <boost/serialization/tracking_enum.hpp>
 #include <boost/archive/detail/helper_collection.hpp>
 #include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost {
 namespace serialization {
-    class BOOST_SYMBOL_VISIBLE_FWD extended_type_info;
+    class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 } // namespace serialization
 
 namespace archive {
