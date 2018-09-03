@@ -56,12 +56,12 @@ class BOOST_SERIALIZATION_DECL extended_type_info_no_rtti_0 :
     public extended_type_info
 {
 protected:
-    BOOST_SERIALIZATION_DECL extended_type_info_no_rtti_0(const char * key);
-    BOOST_SERIALIZATION_DECL ~extended_type_info_no_rtti_0();
+    extended_type_info_no_rtti_0(const char * key);
+    ~extended_type_info_no_rtti_0();
 public:
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_less_than(const boost::serialization::extended_type_info &rhs) const ;
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_equal(const boost::serialization::extended_type_info &rhs) const ;
 };
 

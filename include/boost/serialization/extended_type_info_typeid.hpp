@@ -59,16 +59,16 @@ class BOOST_SERIALIZATION_DECL extended_type_info_typeid_0 :
     }
 protected:
     const std::type_info * m_ti;
-    BOOST_SERIALIZATION_DECL extended_type_info_typeid_0(const char * key);
-    BOOST_SERIALIZATION_DECL ~extended_type_info_typeid_0();
-    BOOST_SERIALIZATION_DECL void type_register(const std::type_info & ti);
-    BOOST_SERIALIZATION_DECL void type_unregister();
-    BOOST_SERIALIZATION_DECL const extended_type_info *
+    extended_type_info_typeid_0(const char * key);
+    ~extended_type_info_typeid_0();
+    void type_register(const std::type_info & ti);
+    void type_unregister();
+    const extended_type_info *
     get_extended_type_info(const std::type_info & ti) const;
 public:
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_less_than(const extended_type_info &rhs) const;
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_equal(const extended_type_info &rhs) const;
     const std::type_info & get_typeid() const {
         return *m_ti;
