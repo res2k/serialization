@@ -38,7 +38,7 @@ namespace boost {
 namespace serialization {
 
 namespace void_cast_detail{
-    class void_caster;
+    class BOOST_SYMBOL_VISIBLE_FWD void_caster;
 }
 
 class BOOST_SERIALIZATION_DECL extended_type_info :
