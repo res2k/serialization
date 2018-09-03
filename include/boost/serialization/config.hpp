@@ -51,6 +51,16 @@
     #define BOOST_SERIALIZATION_DECL
 #endif
 
+#if (defined(BOOST_CLANG) && !defined(_WIN32) && !defined(__WIN32__) && !defined(WIN32))
+/* Clang wants forward declarations to have same visibility attribute as actual declaration,
+ * gcc throws a warning in that case */
+#  define BOOST_SERIALIZATION_DECL_FWD      BOOST_SERIALIZATION_DECL
+#endif
+
+#ifndef BOOST_SERIALIZATION_DECL_FWD
+#  define BOOST_SERIALIZATION_DECL_FWD
+#endif
+
 //  enable automatic library variant selection  ------------------------------// 
 
 #if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_SERIALIZATION_NO_LIB) \
