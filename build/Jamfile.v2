@@ -10,6 +10,8 @@ project boost/serialization
     : source-location ../src
     : requirements
       <conditional>@include-spirit
+    : usage-requirements  # pass these requirement to dependents (i.e. users)
+      <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1
 ;
 
 SPIRIT_ROOT = [ modules.peek : SPIRIT_ROOT ] ;
