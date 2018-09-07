@@ -122,7 +122,7 @@ public:
     // addresses.  This is necessary in order for the
     // void cast operations to work across dll and exe
     // module boundries.
-    bool operator<(const void_caster & rhs) const;
+    BOOST_SERIALIZATION_DECL bool operator<(const void_caster & rhs) const;
 
     const void_caster & operator*(){
         return *this;
