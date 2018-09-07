@@ -27,8 +27,14 @@
 #define BOOST_SERIALIZATION_EXPORT      BOOST_SYMBOL_EXPORT
 #if defined(BOOST_SERIALIZATION_VISIBLE)
 #  define BOOST_SERIALIZATION_IMPORT      BOOST_SERIALIZATION_VISIBLE
-#else
+#elif !defined(_WIN32) && !defined(__WIN32__) && !defined(WIN32)
 #  define BOOST_SERIALIZATION_IMPORT      BOOST_SYMBOL_IMPORT
+#else
+/* Windows: 'dllimport' is not strictly necessary, a symbol is imported
+ * if definition was built with 'dllexport'.
+ * Leaving off dllimport simplifies implementation of custom archives.
+ */
+#  define BOOST_SERIALIZATION_IMPORT
 #endif
 
 #if (defined(BOOST_ALL_DYN_LINK) || defined(BOOST_SERIALIZATION_DYN_LINK))
