@@ -22,6 +22,18 @@ environment:
       BUILD_LINK: static
     - BUILD_TOOLSET: msvc-14.0
       BUILD_LINK: shared
+    - BUILD_TOOLSET: gcc
+      BUILD_LINK: static
+      BUILD_EXTRA: -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive --hash
+    - BUILD_TOOLSET: gcc
+      BUILD_LINK: shared
+      BUILD_EXTRA: -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive --hash
+    - BUILD_TOOLSET: msvc-14.0
+      BUILD_LINK: static
+      BUILD_EXTRA: -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive --hash
+    - BUILD_TOOLSET: msvc-14.0
+      BUILD_LINK: shared
+      BUILD_EXTRA: -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive --hash
 
 install:
   - cd ..
@@ -77,5 +89,4 @@ build: off
 
 test_script:
   - cd libs/serialization/test
-  - b2 -j2 toolset=%BUILD_TOOLSET% link=%BUILD_LINK%
-  - b2 -j2 toolset=%BUILD_TOOLSET% link=%BUILD_LINK% -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive
+  - b2 -j2 toolset=%BUILD_TOOLSET% link=%BUILD_LINK% %BUILD_EXTRA%
