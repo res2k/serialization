@@ -78,3 +78,4 @@ build: off
 test_script:
   - cd libs/serialization/test
   - b2 -j2 toolset=%BUILD_TOOLSET% link=%BUILD_LINK%
+  - b2 -j2 toolset=%BUILD_TOOLSET% link=%BUILD_LINK% -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive
