@@ -100,6 +100,7 @@ install:
 
 script:
   - ./b2 -j 3 libs/serialization/test toolset=$TOOLSET link=${LINK:-shared}
+  - ./b2 -j 3 libs/serialization/test toolset=$TOOLSET link=${LINK:-shared} -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive
 
 notifications:
   email:
