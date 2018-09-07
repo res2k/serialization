@@ -53,6 +53,11 @@ lib portable_binary_archive
         ../build//boost_serialization
     :
         <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1
+        <link>shared:<define>PORTABLE_BINARY_ARCHIVE_DYN_LINK=1
+        <define>PORTABLE_BINARY_ARCHIVE_SOURCE=1
+    :
+    :
+        <link>shared:<define>PORTABLE_BINARY_ARCHIVE_DYN_LINK=1
     ;
 
 lib a

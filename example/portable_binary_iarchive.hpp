@@ -65,7 +65,7 @@ public:
 // "Portable" input binary archive.  It addresses integer size and endienness so 
 // that binary archives can be passed across systems. Note:floating point types
 // not addressed here
-class portable_binary_iarchive :
+class PORTABLE_BINARY_ARCHIVE_DECL portable_binary_iarchive :
     public boost::archive::basic_binary_iprimitive<
         portable_binary_iarchive,
         std::istream::char_type, 
