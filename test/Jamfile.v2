@@ -44,6 +44,17 @@ import ../util/test :
 
 BOOST_ARCHIVE_LIST = [ modules.peek : BOOST_ARCHIVE_LIST ] ;
 
+# To check against portable_binary_archive, use:
+#   b2 [...] -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive
+lib portable_binary_archive
+    :
+        ../example/portable_binary_iarchive.cpp
+        ../example/portable_binary_oarchive.cpp
+        ../build//boost_serialization
+    :
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1
+    ;
+
 lib a
     :
         dll_a.cpp
