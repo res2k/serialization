@@ -14,6 +14,7 @@
 import ../../config/checks/config : requires ;
 
 BOOST_ARCHIVE_LIST = [ modules.peek : BOOST_ARCHIVE_LIST ] ;
+BOOST_ARCHIVE_DEP =  [ modules.peek : BOOST_ARCHIVE_DEP ] ;
 
 # these are used to shorten testing while in development.  It permits
 # testing to be applied to just a particular type of archive
@@ -158,6 +159,7 @@ rule test-bsl-run_archive ( test-name : archive-name : sources * : libs * : requ
             run-winvoke $(test-name)_$(archive-name)
             : # sources
                 $(sources).cpp $(libs)
+                $(BOOST_ARCHIVE_DEP)
             : # input files
             : # requirements
                 <define>BOOST_ARCHIVE_TEST=$(archive-name).hpp
@@ -168,6 +170,7 @@ rule test-bsl-run_archive ( test-name : archive-name : sources * : libs * : requ
             run-invoke $(test-name)_$(archive-name)
             : # sources
                 $(sources).cpp $(libs)
+                $(BOOST_ARCHIVE_DEP)
             : # input files
             : # requirements
                 <define>BOOST_ARCHIVE_TEST=$(archive-name).hpp
