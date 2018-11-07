@@ -123,7 +123,7 @@ namespace boost {
 namespace archive {
 
 namespace detail {
-    template class PORTABLE_BINARY_ARCHIVE_DECL archive_serializer_map<portable_binary_iarchive>;
+    template class archive_serializer_map<portable_binary_iarchive>;
 }
 
 template class basic_binary_iprimitive<
