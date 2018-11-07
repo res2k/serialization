@@ -94,7 +94,7 @@ namespace detail {
     template class archive_serializer_map<portable_binary_oarchive>;
 }
 
-template class basic_binary_oprimitive<
+template class BOOST_SYMBOL_VISIBLE basic_binary_oprimitive<
     portable_binary_oarchive,
     std::ostream::char_type, 
     std::ostream::traits_type
