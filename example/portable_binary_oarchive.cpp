@@ -10,6 +10,12 @@
 
 #include <ostream>
 #include <boost/detail/endian.hpp>
+
+// Pretend we build Boost.Serialization so MinGW GCC propertly exports basic_binary_oprimitive<>
+#define BOOST_ARCHIVE_SOURCE
+#include <boost/archive/basic_binary_oprimitive.hpp>
+#undef BOOST_ARCHIVE_SOURCE
+
 #include "portable_binary_oarchive.hpp"
 
 void 
