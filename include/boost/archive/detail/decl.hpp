@@ -22,24 +22,38 @@
 // http://www.boost.org/more/separate_compilation.html
 
 #include <boost/config.hpp>
+#include <boost/archive/detail/visibility.hpp>
+
+#define BOOST_SERIALIZATION_EXPORT      BOOST_SYMBOL_EXPORT
+#if defined(BOOST_SERIALIZATION_VISIBLE)
+#  define BOOST_SERIALIZATION_IMPORT      BOOST_SERIALIZATION_VISIBLE
+#elif !defined(_WIN32) && !defined(__WIN32__) && !defined(WIN32)
+#  define BOOST_SERIALIZATION_IMPORT      BOOST_SYMBOL_IMPORT
+#else
+/* Windows: 'dllimport' is not strictly necessary, a symbol is imported
+ * if definition was built with 'dllexport'.
+ * Leaving off dllimport simplifies implementation of custom archives.
+ */
+#  define BOOST_SERIALIZATION_IMPORT
+#endif
 
 #if (defined(BOOST_ALL_DYN_LINK) || defined(BOOST_SERIALIZATION_DYN_LINK))
     #if defined(BOOST_ARCHIVE_SOURCE)
-        #define BOOST_ARCHIVE_DECL BOOST_SYMBOL_EXPORT
+        #define BOOST_ARCHIVE_DECL BOOST_SERIALIZATION_EXPORT
     #else
-        #define BOOST_ARCHIVE_DECL BOOST_SYMBOL_IMPORT
+        #define BOOST_ARCHIVE_DECL BOOST_SERIALIZATION_IMPORT
     #endif
 
     #if defined(BOOST_WARCHIVE_SOURCE)
-        #define BOOST_WARCHIVE_DECL BOOST_SYMBOL_EXPORT
+        #define BOOST_WARCHIVE_DECL BOOST_SERIALIZATION_EXPORT
     #else
-        #define BOOST_WARCHIVE_DECL BOOST_SYMBOL_IMPORT
+        #define BOOST_WARCHIVE_DECL BOOST_SERIALIZATION_IMPORT
     #endif
 
     #if defined(BOOST_WARCHIVE_SOURCE) || defined(BOOST_ARCHIVE_SOURCE)
-        #define BOOST_ARCHIVE_OR_WARCHIVE_DECL BOOST_SYMBOL_EXPORT
+        #define BOOST_ARCHIVE_OR_WARCHIVE_DECL BOOST_SERIALIZATION_EXPORT
     #else
-        #define BOOST_ARCHIVE_OR_WARCHIVE_DECL BOOST_SYMBOL_IMPORT
+        #define BOOST_ARCHIVE_OR_WARCHIVE_DECL BOOST_SERIALIZATION_IMPORT
     #endif
 
 #endif

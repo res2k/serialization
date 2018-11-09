@@ -8,6 +8,10 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#if defined(BOOST_SERIALIZATION_HAVE_PRAGMA_VISIBILITY)
+#  pragma GCC visibility pop
+#endif
+
 #ifdef BOOST_MSVC
 #pragma warning(pop)
 #endif

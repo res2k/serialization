@@ -26,7 +26,7 @@
 #include <boost/mpl/bool.hpp>
 
 #include <boost/serialization/config.hpp>
-#include <boost/config/abi_prefix.hpp> // must be the last header
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4251 4231 4660 4275)
@@ -38,10 +38,10 @@ namespace boost {
 namespace serialization {
 
 namespace void_cast_detail{
-    class void_caster;
+    class BOOST_SYMBOL_VISIBLE_FWD void_caster;
 }
 
-class BOOST_SYMBOL_VISIBLE extended_type_info :
+class BOOST_SERIALIZATION_DECL extended_type_info :
     private boost::noncopyable
 {
 private:
@@ -56,29 +56,29 @@ private:
     const char * m_key;
 
 protected:
-    BOOST_SERIALIZATION_DECL void key_unregister() const;
-    BOOST_SERIALIZATION_DECL void key_register() const;
+    void key_unregister() const;
+    void key_register() const;
     // this class can't be used as is. It's just the 
     // common functionality for all type_info replacement
     // systems.  Hence, make these protected
-    BOOST_SERIALIZATION_DECL extended_type_info(
+    extended_type_info(
         const unsigned int type_info_key,
         const char * key
     );
-    virtual BOOST_SERIALIZATION_DECL ~extended_type_info();
+    virtual ~extended_type_info();
 public:
     const char * get_key() const {
         return m_key;
     }
     virtual const char * get_debug_info() const = 0;
-    BOOST_SERIALIZATION_DECL bool operator<(const extended_type_info &rhs) const;
-    BOOST_SERIALIZATION_DECL bool operator==(const extended_type_info &rhs) const;
+    bool operator<(const extended_type_info &rhs) const;
+    bool operator==(const extended_type_info &rhs) const;
     bool operator!=(const extended_type_info &rhs) const {
         return !(operator==(rhs));
     }
     // note explicit "export" of static function to work around
     // gcc 4.5 mingw error
-    static BOOST_SERIALIZATION_DECL const extended_type_info *
+    static const extended_type_info *
     find(const char *key);
     // for plugins
     virtual void * construct(unsigned int /*count*/ = 0, ...) const = 0;
@@ -111,6 +111,6 @@ inline const char * guid(){
 #pragma warning(pop)
 #endif
 
-#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+#include <boost/archive/detail/abi_suffix.hpp> // pops abi_prefix.hpp pragmas
 
 #endif // BOOST_SERIALIZATION_EXTENDED_TYPE_INFO_HPP

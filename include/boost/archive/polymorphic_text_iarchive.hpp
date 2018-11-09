@@ -19,6 +19,7 @@
 #include <boost/config.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/detail/polymorphic_iarchive_route.hpp>
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 #ifdef BOOST_MSVC
 #  pragma warning(push)
@@ -40,6 +41,8 @@ public:
 
 } // namespace archive
 } // namespace boost
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 #ifdef BOOST_MSVC
 #pragma warning(pop)

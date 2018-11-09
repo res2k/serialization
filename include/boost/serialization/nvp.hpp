@@ -30,6 +30,8 @@
 
 #include <boost/core/addressof.hpp>
 
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+
 namespace boost {
 namespace serialization {
 
@@ -108,6 +110,8 @@ struct tracking_level<nvp< T > >
 
 } // seralization
 } // boost
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 #include <boost/preprocessor/stringize.hpp>
 

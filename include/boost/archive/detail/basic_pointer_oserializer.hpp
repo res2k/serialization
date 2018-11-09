@@ -30,13 +30,13 @@
 
 namespace boost {
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 } // namespace serialization
 
 namespace archive {
 namespace detail {
 
-class basic_oarchive;
+class BOOST_SYMBOL_VISIBLE_FWD basic_oarchive;
 class basic_oserializer;
 
 class BOOST_SYMBOL_VISIBLE basic_pointer_oserializer : 

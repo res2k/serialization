@@ -22,6 +22,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
 
+#include <boost/serialization/config.hpp>
 #include <boost/serialization/tracking_enum.hpp>
 #include <boost/archive/basic_archive.hpp>
 #include <boost/archive/detail/decl.hpp>
@@ -30,15 +31,15 @@
 
 namespace boost {
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 } // namespace serialization
 
 namespace archive {
 namespace detail {
 
 class basic_iarchive_impl;
-class basic_iserializer;
-class basic_pointer_iserializer;
+class BOOST_SYMBOL_VISIBLE_FWD basic_iserializer;
+class BOOST_SYMBOL_VISIBLE_FWD basic_pointer_iserializer;
 
 //////////////////////////////////////////////////////////////////////
 // class basic_iarchive - read serialized objects from a input stream

@@ -19,6 +19,7 @@
 #include <boost/config.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/detail/polymorphic_oarchive_route.hpp>
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost { 
 namespace archive {
@@ -33,6 +34,8 @@ typedef detail::polymorphic_oarchive_route<
 
 } // namespace archive
 } // namespace boost
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 // required by export
 BOOST_SERIALIZATION_REGISTER_ARCHIVE(
