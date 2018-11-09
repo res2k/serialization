@@ -9,8 +9,8 @@
 // should pass compilation and execution
 namespace boost {
 namespace archive {
-    class polymorphic_oarchive;
-    class polymorphic_iarchive;
+    class BOOST_SYMBOL_VISIBLE polymorphic_oarchive;
+    class BOOST_SYMBOL_VISIBLE polymorphic_iarchive;
 }
 }
 

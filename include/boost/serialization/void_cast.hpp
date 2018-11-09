@@ -40,7 +40,7 @@
 namespace boost { 
 namespace serialization { 
 
-class extended_type_info;
+class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 
 // Given a void *, assume that it really points to an instance of one type
 // and alter it so that it would point to an instance of a related type.
@@ -122,7 +122,7 @@ public:
     // addresses.  This is necessary in order for the
     // void cast operations to work across dll and exe
     // module boundries.
-    bool operator<(const void_caster & rhs) const;
+    BOOST_SERIALIZATION_DECL bool operator<(const void_caster & rhs) const;
 
     const void_caster & operator*(){
         return *this;
@@ -151,7 +151,7 @@ public:
 #endif
 
 template <class Derived, class Base>
-class BOOST_SYMBOL_VISIBLE void_caster_primitive :
+class BOOST_SERIALIZATION_PRIVATE void_caster_primitive :
     public void_caster
 {
     virtual void const * downcast(void const * const t) const {

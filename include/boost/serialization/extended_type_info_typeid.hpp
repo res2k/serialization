@@ -38,7 +38,7 @@
 
 #include <boost/mpl/if.hpp>
 
-#include <boost/config/abi_prefix.hpp> // must be the last header
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 #ifdef BOOST_MSVC
 #  pragma warning(push)
@@ -49,7 +49,7 @@ namespace boost {
 namespace serialization {
 namespace typeid_system {
 
-class BOOST_SYMBOL_VISIBLE extended_type_info_typeid_0 :
+class BOOST_SERIALIZATION_DECL extended_type_info_typeid_0 :
     public extended_type_info
 {
     virtual const char * get_debug_info() const {
@@ -59,16 +59,16 @@ class BOOST_SYMBOL_VISIBLE extended_type_info_typeid_0 :
     }
 protected:
     const std::type_info * m_ti;
-    BOOST_SERIALIZATION_DECL extended_type_info_typeid_0(const char * key);
-    BOOST_SERIALIZATION_DECL ~extended_type_info_typeid_0();
-    BOOST_SERIALIZATION_DECL void type_register(const std::type_info & ti);
-    BOOST_SERIALIZATION_DECL void type_unregister();
-    BOOST_SERIALIZATION_DECL const extended_type_info *
+    extended_type_info_typeid_0(const char * key);
+    ~extended_type_info_typeid_0();
+    void type_register(const std::type_info & ti);
+    void type_unregister();
+    const extended_type_info *
     get_extended_type_info(const std::type_info & ti) const;
 public:
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_less_than(const extended_type_info &rhs) const;
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_equal(const extended_type_info &rhs) const;
     const std::type_info & get_typeid() const {
         return *m_ti;
@@ -78,7 +78,7 @@ public:
 } // typeid_system
 
 template<class T>
-class extended_type_info_typeid : 
+class BOOST_SERIALIZATION_PRIVATE extended_type_info_typeid :
     public typeid_system::extended_type_info_typeid_0,
     public singleton<extended_type_info_typeid< T > >
 {
@@ -162,6 +162,6 @@ public:
 #ifdef BOOST_MSVC
 #pragma warning(pop)
 #endif
-#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+#include <boost/archive/detail/abi_suffix.hpp> // pops abi_prefix.hpp pragmas
 
 #endif // BOOST_SERIALIZATION_EXTENDED_TYPE_INFO_TYPEID_HPP

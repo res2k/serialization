@@ -1,8 +1,8 @@
 # Boost serialization Library test Jamfile
 
 #  (C) Copyright Robert Ramey 2002-2004.
-#  Use, modification, and distribution are subject to the 
-#  Boost Software License, Version 1.0. (See accompanying file 
+#  Use, modification, and distribution are subject to the
+#  Boost Software License, Version 1.0. (See accompanying file
 #  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
@@ -14,6 +14,21 @@ project libs/serialization/test
 
 # import rules for testing conditional on config file variables
 import ../../config/checks/config : requires ;
+
+# Set up a special build feature to force -fPIC
+import feature : feature ;
+import os ;
+
+if [ os.name ] = "LINUX"
+{
+    feature fpic : default force : propagated composite ;
+    feature.compose <fpic>force : <cflags>-fPIC <cxxflags>-fPIC ;
+}
+else
+{
+    # Mark fpic "incidental" as it doesn't affect the compilation at all.
+    feature fpic : default force : propagated composite incidental ;
+}
 
 # import rules from the boost serialization test
 import ../util/test :
@@ -28,28 +43,64 @@ import ../util/test :
 ;
 
 BOOST_ARCHIVE_LIST = [ modules.peek : BOOST_ARCHIVE_LIST ] ;
-    
+
+# To check against portable_binary_archive, use:
+#   b2 [...] -s BOOST_ARCHIVE_LIST="portable_binary_archive.hpp" -s BOOST_ARCHIVE_DEP=portable_binary_archive
+lib portable_binary_archive
+    :
+        ../example/portable_binary_iarchive.cpp
+        ../example/portable_binary_oarchive.cpp
+        ../build//boost_serialization
+    :
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1
+        <link>shared:<define>PORTABLE_BINARY_ARCHIVE_DYN_LINK=1
+        <define>PORTABLE_BINARY_ARCHIVE_SOURCE=1
+    :
+    :
+        <link>shared:<define>PORTABLE_BINARY_ARCHIVE_DYN_LINK=1
+    ;
+
 lib a
-    : 
+    :
         dll_a.cpp
         ../build//boost_serialization
-    : 
-        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
+    :
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1
     ;
 lib polymorphic_base
     :
-        polymorphic_base.cpp 
+        polymorphic_base.cpp
         ../build//boost_serialization
-    : 
-        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
+    :
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1
     ;
 
 lib polymorphic_derived2
     :
         polymorphic_derived2.cpp
         ../build//boost_serialization
-    : 
-        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
+    :
+        <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1
+    ;
+
+alias static_boost_serialization :
+    ../build//boost_serialization/<link>static/<fpic>force
+    ;
+
+lib multi_shared_1
+    :
+        multi_shared1.cpp
+        static_boost_serialization
+    :
+        <link>shared
+    ;
+
+lib multi_shared_2
+    :
+        multi_shared2.cpp
+        static_boost_serialization
+    :
+        <link>shared
     ;
 
 test-suite "serialization" :
@@ -126,7 +177,7 @@ test-suite "serialization" :
     ;
 
 if ! $(BOOST_ARCHIVE_LIST) {
-    test-suite "serialization2" : 
+    test-suite "serialization2" :
         [ test-bsl-run test_inclusion ]
         [ test-bsl-run test_inclusion2 ]
         # boost build has the feature that the building if libraries vs dll is automatic
@@ -138,6 +189,8 @@ if ! $(BOOST_ARCHIVE_LIST) {
 
         # [ test-bsl-run test_dll_plugin : : polymorphic_derived2 : <link>static:<build>no <target-os>linux:<linkflags>-ldl ]
 
+        # Tests using shared libraries which are linked against static boost. Hence ignore for shared boost build
+        [ test-bsl-run test_multi_shared_lib : : multi_shared_1 multi_shared_2 : <link>shared:<build>no ]
         [ test-bsl-run test_dll_simple   : : a : ]
         [ test-bsl-run test_private_ctor ]
         [ test-bsl-run test_reset_object_address : A ]
@@ -146,9 +199,9 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ test-bsl-run test_iterators ]
         [ test-bsl-run test_iterators_base64 ]
         [ test-bsl-run test_smart_cast ]
-        [ test-bsl-run test_codecvt_null ]
+        [ test-bsl-run test_codecvt_null : : ../build//boost_wserialization ]
         [ test-bsl-run test_singleton ]
-
+        [ test-bsl-run test_singleton_instance ]
         # [ test-bsl-run test_z ]
 
         # should fail compilation
@@ -172,7 +225,7 @@ if ! $(BOOST_ARCHIVE_LIST) {
         #[ compile test_const_save_warn1_nvp.cpp ]
         #[ compile test_const_save_warn2_nvp.cpp ]
         #[ compile test_const_save_warn3_nvp.cpp ]
-        
+
         # should compile
         [ compile test_traits_pass.cpp ]
         [ compile test_const_pass.cpp ]

@@ -16,10 +16,10 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <boost/archive/detail/polymorphic_oarchive_dispatch.hpp>
+#include <boost/archive/detail/polymorphic_oarchive_route.hpp>
 #include "portable_binary_oarchive.hpp"
 
-typedef boost::archive::detail::polymorphic_oarchive_dispatch<
+typedef boost::archive::detail::polymorphic_oarchive_route<
     portable_binary_oarchive
  > polymorphic_portable_binary_oarchive;
 

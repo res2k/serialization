@@ -33,6 +33,8 @@ namespace std{
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/wrapper.hpp>
 
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+
 namespace boost {
 namespace serialization {
 
@@ -75,5 +77,7 @@ make_binary_object(const void * t, std::size_t size){
 
 } // namespace serialization
 } // boost
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 #endif // BOOST_SERIALIZATION_BINARY_OBJECT_HPP

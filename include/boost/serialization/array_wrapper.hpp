@@ -26,6 +26,8 @@ namespace std{
 #include <boost/mpl/bool_fwd.hpp>
 #include <boost/type_traits/remove_const.hpp>
 
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+
 namespace boost { namespace serialization {
 
 template<class T>
@@ -117,5 +119,6 @@ const array_wrapper< T > make_array(T* t, S s){
 
 } } // end namespace boost::serialization
 
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 #endif //BOOST_SERIALIZATION_ARRAY_WRAPPER_HPP

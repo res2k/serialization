@@ -18,6 +18,9 @@
 #include <boost/serialization/level.hpp>
 #include <boost/serialization/nvp.hpp>
 
+// Test currently doesn't work with portable_binary_archive
+#if !defined(PORTABLE_BINARY_IARCHIVE_HPP)
+
 struct A
 {
     template<class Archive>
@@ -62,5 +65,15 @@ test_main( int /* argc */, char* /* argv */[] )
     in(testfile, a);
     return EXIT_SUCCESS;
 }
+
+#else // !defined(PORTABLE_BINARY_IARCHIVE_HPP)
+
+int
+test_main( int /* argc */, char* /* argv */[] )
+{
+    return EXIT_SUCCESS;
+}
+
+#endif // !defined(PORTABLE_BINARY_IARCHIVE_HPP)
 
 // EOF

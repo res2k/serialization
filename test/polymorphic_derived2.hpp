@@ -55,8 +55,13 @@ class POLYMORPHIC_DERIVED2_DLL_DECL polymorphic_derived2 :
         return "polymorphic_derived2";
     }
 public:
+#ifdef POLYMORPHIC_DERIVED2_EXTERNAL_DEF
+    polymorphic_derived2();
+    ~polymorphic_derived2();
+#else
     polymorphic_derived2(){}
     ~polymorphic_derived2(){}
+#endif
 };
 
 // we use this because we want to assign a key to this type

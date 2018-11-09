@@ -32,15 +32,15 @@
 
 namespace boost {
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 } // namespace serialization
 
 // forward declarations
 namespace archive {
 namespace detail {
 
-class basic_iarchive;
-class basic_pointer_iserializer;
+class BOOST_SYMBOL_VISIBLE_FWD basic_iarchive;
+class BOOST_SYMBOL_VISIBLE_FWD basic_pointer_iserializer;
 
 class BOOST_SYMBOL_VISIBLE basic_iserializer : 
     public basic_serializer

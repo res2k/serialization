@@ -8,9 +8,13 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <boost/archive/detail/visibility.hpp>
 #include <boost/config/abi_prefix.hpp> // must be the last header
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4251 4231 4660 4275)
 #endif
 
+#if defined(BOOST_SERIALIZATION_HAVE_PRAGMA_VISIBILITY)
+#  pragma GCC visibility push(hidden)
+#endif

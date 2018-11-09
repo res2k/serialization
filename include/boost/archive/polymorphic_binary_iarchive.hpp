@@ -19,6 +19,7 @@
 #include <boost/config.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/detail/polymorphic_iarchive_route.hpp>
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 #ifdef BOOST_MSVC
 #  pragma warning(push)
@@ -44,6 +45,8 @@ public:
 #ifdef BOOST_MSVC
 #pragma warning(pop)
 #endif
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 // required by export
 BOOST_SERIALIZATION_REGISTER_ARCHIVE(

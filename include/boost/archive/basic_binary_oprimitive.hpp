@@ -60,7 +60,7 @@ namespace archive {
 // class basic_binary_oprimitive - binary output of prmitives
 
 template<class Archive, class Elem, class Tr>
-class BOOST_SYMBOL_VISIBLE basic_binary_oprimitive {
+class BOOST_ARCHIVE_OR_WARCHIVE_DECL basic_binary_oprimitive {
 #ifndef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
     friend class save_access;
 protected:
@@ -100,26 +100,19 @@ public:
         BOOST_ASSERT(0 == static_cast<int>(t) || 1 == static_cast<int>(t));
         save_binary(& t, sizeof(t));
     }
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
-    save(const std::string &s);
+    void save(const std::string &s);
     #ifndef BOOST_NO_STD_WSTRING
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
-    save(const std::wstring &ws);
+    void save(const std::wstring &ws);
     #endif
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
-    save(const char * t);
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
-    save(const wchar_t * t);
+    void save(const char * t);
+    void save(const wchar_t * t);
 
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
-    init();
+    void init();
     
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL 
     basic_binary_oprimitive(
         std::basic_streambuf<Elem, Tr> & sb, 
         bool no_codecvt
     );
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL 
     ~basic_binary_oprimitive();
 public:
 

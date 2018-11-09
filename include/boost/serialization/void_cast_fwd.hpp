@@ -19,11 +19,12 @@
 
 #include <cstddef> // NULL
 #include <boost/serialization/force_include.hpp>
+#include <boost/archive/detail/visibility.hpp>
 
 namespace boost {
 namespace serialization {
 namespace void_cast_detail{
-class void_caster;
+class BOOST_SYMBOL_VISIBLE_FWD void_caster;
 } // namespace void_cast_detail
 template<class Derived, class Base>
 BOOST_DLLEXPORT 

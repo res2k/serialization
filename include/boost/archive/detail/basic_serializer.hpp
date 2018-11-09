@@ -23,6 +23,8 @@
 #include <boost/config.hpp>
 #include <boost/serialization/extended_type_info.hpp>
 
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
+
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4511 4512)
@@ -69,6 +71,8 @@ public:
 } // namespace detail
 } // namespace archive
 } // namespace boost
+
+#include <boost/archive/detail/abi_suffix.hpp> // must be the last header
 
 #ifdef BOOST_MSVC
 #pragma warning(pop)

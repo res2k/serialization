@@ -22,21 +22,22 @@
 #include <boost/scoped_ptr.hpp>
 
 #include <boost/archive/basic_archive.hpp>
+#include <boost/serialization/config.hpp>
 #include <boost/serialization/tracking_enum.hpp>
 #include <boost/archive/detail/helper_collection.hpp>
 #include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost {
 namespace serialization {
-    class extended_type_info;
+    class BOOST_SERIALIZATION_DECL_FWD extended_type_info;
 } // namespace serialization
 
 namespace archive {
 namespace detail {
 
 class basic_oarchive_impl;
-class basic_oserializer;
-class basic_pointer_oserializer;
+class BOOST_SYMBOL_VISIBLE_FWD basic_oserializer;
+class BOOST_SYMBOL_VISIBLE_FWD basic_pointer_oserializer;
 
 //////////////////////////////////////////////////////////////////////
 // class basic_oarchive - write serialized objects to an output stream

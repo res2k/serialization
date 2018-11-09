@@ -60,7 +60,7 @@ public:
 // archive. it addresses integer size and endienness so that binary archives can
 // be passed across systems. Note:floating point types not addressed here
 
-class portable_binary_oarchive :
+class PORTABLE_BINARY_ARCHIVE_DECL portable_binary_oarchive :
     public boost::archive::basic_binary_oprimitive<
         portable_binary_oarchive,
         std::ostream::char_type, 

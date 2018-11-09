@@ -36,7 +36,7 @@
 // hijack serialization access
 #include <boost/serialization/access.hpp>
 
-#include <boost/config/abi_prefix.hpp> // must be the last header
+#include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 #ifdef BOOST_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4251 4231 4660 4275 4511 4512)
@@ -52,23 +52,23 @@ namespace no_rtti_system {
 
 // common base class to share type_info_key.  This is used to 
 // identify the method used to keep track of the extended type
-class BOOST_SYMBOL_VISIBLE extended_type_info_no_rtti_0 :
+class BOOST_SERIALIZATION_DECL extended_type_info_no_rtti_0 :
     public extended_type_info
 {
 protected:
-    BOOST_SERIALIZATION_DECL extended_type_info_no_rtti_0(const char * key);
-    BOOST_SERIALIZATION_DECL ~extended_type_info_no_rtti_0();
+    extended_type_info_no_rtti_0(const char * key);
+    ~extended_type_info_no_rtti_0();
 public:
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_less_than(const boost::serialization::extended_type_info &rhs) const ;
-    virtual BOOST_SERIALIZATION_DECL bool
+    virtual bool
     is_equal(const boost::serialization::extended_type_info &rhs) const ;
 };
 
 } // no_rtti_system
 
 template<class T>
-class extended_type_info_no_rtti : 
+class BOOST_SERIALIZATION_PRIVATE extended_type_info_no_rtti :
     public no_rtti_system::extended_type_info_no_rtti_0,
     public singleton<extended_type_info_no_rtti< T > >
 {
@@ -177,6 +177,6 @@ public:
 #ifdef BOOST_MSVC
 #  pragma warning(pop)
 #endif
-#include <boost/config/abi_suffix.hpp> // pops abi_suffix.hpp pragmas
+#include <boost/archive/detail/abi_suffix.hpp> // pops abi_prefix.hpp pragmas
 
 #endif // BOOST_EXTENDED_TYPE_INFO_NO_RTTI_HPP

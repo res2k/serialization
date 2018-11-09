@@ -20,6 +20,16 @@
 #error This code assumes an eight-bit byte.
 #endif
 
+#if defined(PORTABLE_BINARY_ARCHIVE_DYN_LINK)
+#  if defined(PORTABLE_BINARY_ARCHIVE_SOURCE)
+#    define PORTABLE_BINARY_ARCHIVE_DECL    BOOST_SYMBOL_EXPORT
+#  else
+#    define PORTABLE_BINARY_ARCHIVE_DECL    BOOST_SYMBOL_IMPORT
+#  endif
+#else
+#  define PORTABLE_BINARY_ARCHIVE_DECL
+#endif
+
 #include <boost/archive/basic_archive.hpp>
 #include <boost/detail/endian.hpp>
 

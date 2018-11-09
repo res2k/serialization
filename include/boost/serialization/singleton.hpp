@@ -118,7 +118,16 @@ private:
     static T & get_instance() {
         // use a wrapper so that types T with protected constructors
         // can be used
-        class singleton_wrapper : public T {};
+        class singleton_wrapper : public T
+        {
+        public:
+            singleton_wrapper() {
+                get_is_destroyed() = false;
+            }
+            ~singleton_wrapper() {
+                get_is_destroyed() = true;
+            }
+        };
         static singleton_wrapper t;
 
         // refer to instance, causing it to be instantiated (and
@@ -149,12 +158,6 @@ public:
     }
     BOOST_DLLEXPORT static bool is_destroyed(){
         return get_is_destroyed();
-    }
-    BOOST_DLLEXPORT singleton(){
-        get_is_destroyed() = false;
-    }
-    BOOST_DLLEXPORT ~singleton() {
-        get_is_destroyed() = true;
     }
 };
 

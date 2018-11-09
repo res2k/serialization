@@ -11,6 +11,11 @@
 #include <istream>
 #include <string>
 
+// Pretend we build Boost.Serialization so MinGW GCC propertly exports basic_binary_iprimitive<>
+#define BOOST_ARCHIVE_SOURCE
+#include <boost/archive/basic_binary_iprimitive.hpp>
+#undef BOOST_ARCHIVE_SOURCE
+
 #include <boost/detail/endian.hpp>
 #include <boost/serialization/throw_exception.hpp>
 #include <boost/archive/archive_exception.hpp>
@@ -121,7 +126,7 @@ namespace detail {
     template class archive_serializer_map<portable_binary_iarchive>;
 }
 
-template class basic_binary_iprimitive<
+template class BOOST_SYMBOL_VISIBLE basic_binary_iprimitive<
     portable_binary_iarchive,
     std::istream::char_type, 
     std::istream::traits_type
