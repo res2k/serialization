@@ -152,11 +152,37 @@ void load_exported(const char *testfile)
     delete rb2;
 }
 
-#ifdef BOOST_WINDOWS
+#include <boost/dll/runtime_symbol_info.hpp>
+#include <boost/dll/shared_library.hpp>
 
-#define WIN32_LEAN_AND_MEAN
-#include <TCHAR.H>
-#include <windows.h>
+static boost::filesystem::path plugin_location()
+{
+    /* The EXE path looks like this:
+        bin.v2/libs/serialization/test/test_dll_plugin.test/<build-dir>/test_dll_plugin
+       The dll_polymorphic_derived2 lib path looks like:
+        bin.v2/libs/serialization/test/<build-dir>/libdll_polymorphic_derived2.so.1.69.0
+       ...so we can compute the plugin location from the exe location by removing the
+       "test_dll_plugin.test" part.
+     */
+    boost::filesystem::path exe_path = boost::dll::program_location();
+    boost::filesystem::path test_dir_name = exe_path.filename();
+    test_dir_name.replace_extension (".test");
+    boost::filesystem::path plugin_path;
+    for (boost::filesystem::path::iterator exe_path_part = exe_path.begin();
+         exe_path_part != exe_path.end();
+         ++exe_path_part)
+    {
+        if (*exe_path_part != test_dir_name)
+            plugin_path /= *exe_path_part;
+    }
+    return plugin_path.parent_path();
+}
+
+struct scoped_singleton_unlock
+{
+    scoped_singleton_unlock() { boost::serialization::get_singleton_module().unlock(); }
+    ~scoped_singleton_unlock() { boost::serialization::get_singleton_module().lock(); }
+};
 
 int
 test_main( int /* argc */, char* /* argv */[] )
@@ -164,48 +190,24 @@ test_main( int /* argc */, char* /* argv */[] )
     const char * testfile = boost::archive::tmpnam(NULL);
     BOOST_REQUIRE(NULL != testfile);
 
-    HINSTANCE hDLL;               // Handle to DLL
-    hDLL = LoadLibrary(_T("polymorphic_derived2.dll"));
-    BOOST_CHECK_MESSAGE(
-        (0 != hDLL), 
-        "Failed to find/load polymorphic_derived2"
-    );
-    if(0 == hDLL)
-        return EXIT_FAILURE;
+    boost::dll::shared_library plugin_dll;
+    {
+        scoped_singleton_unlock ssu; // the plugin will create new singletons
+        plugin_dll.load (plugin_location() / POLYMORPHIC_DERIVED2_NAME, boost::dll::load_mode::rtld_now);
+    }
+
+    boost::serialization::get_singleton_module().lock();
 
     save_exported(testfile);
     load_exported(testfile);
-    FreeLibrary(hDLL);
+
+    {
+        scoped_singleton_unlock ssu; // unloading the plugin may modify singletons
+        plugin_dll.unload();
+    }
 
     std::remove(testfile);
     return EXIT_SUCCESS;
 }
-
-#else // presume *nix
-
-#include <dlfcn.h>
-
-int
-test_main( int /* argc */, char* /* argv */[] )
-{
-    const char * testfile = boost::archive::tmpnam(NULL);
-    BOOST_REQUIRE(NULL != testfile);
-
-    void * hDLL;               // Handle to DLL
-    hDLL = dlopen("polymorphic_derived2.so", RTLD_NOW | RTLD_GLOBAL);
-    BOOST_CHECK_MESSAGE((0 != hDLL), "Failed to find/load plugin_polymorphic_derived2" );
-    BOOST_CHECK_MESSAGE((0 != hDLL), dlerror() );
-    if(0 == hDLL)
-        return EXIT_FAILURE;
-
-    save_exported(testfile);
-    load_exported(testfile);
-    dlclose(hDLL);
-
-    std::remove(testfile);
-    return EXIT_SUCCESS;
-}
-
-#endif
 
 // EOF
