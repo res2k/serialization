@@ -18,17 +18,10 @@ import ../../config/checks/config : requires ;
 # Set up a special build feature to force -fPIC
 import feature : feature ;
 import os ;
+import set ;
 
-if [ os.name ] = "LINUX"
-{
-    feature fpic : default force : propagated composite ;
-    feature.compose <fpic>force : <cflags>-fPIC <cxxflags>-fPIC ;
-}
-else
-{
-    # Mark fpic "incidental" as it doesn't affect the compilation at all.
-    feature fpic : default force : propagated composite incidental ;
-}
+feature fpic : default force : propagated composite ;
+feature.compose <fpic>force : <cflags>-fPIC <cxxflags>-fPIC ;
 
 # import rules from the boost serialization test
 import ../util/test :
@@ -67,8 +60,12 @@ lib dll_polymorphic_derived2
         <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
     ;
 
+local all-os = [ feature.values <target-os> ] ;
+local non-windows = [ set.difference $(all-os) : cygwin windows ] ;
+
 alias static_boost_serialization :
-    ../build//boost_serialization/<link>static/<fpic>force
+    ../build//boost_serialization/<link>static #/<fpic>force
+    : <target-os>$(non-windows):<fpic>force
     ;
 
 lib multi_shared_1
