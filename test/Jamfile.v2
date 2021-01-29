@@ -15,6 +15,14 @@ project libs/serialization/test
 # import rules for testing conditional on config file variables
 import ../../config/checks/config : requires ;
 
+# Set up a special build feature to force -fPIC
+import feature : feature ;
+import flags ;
+import os ;
+
+feature fpic : default force : propagated composite ;
+feature.compose <fpic>force : <cflags>-fPIC <cxxflags>-fPIC ;
+
 # import rules from the boost serialization test
 import ../util/test :
     run-template
@@ -51,6 +59,29 @@ lib dll_polymorphic_derived2
         ../build//boost_serialization
     : 
         <link>shared:<define>BOOST_SERIALIZATION_DYN_LINK=1 
+    ;
+
+local fpic_feature = [ flags.check-has-flag <cxxflags>-fPIC : <fpic>force ] ;
+
+alias static_boost_serialization :
+    ../build//boost_serialization/<link>static #/<fpic>force
+    : $(fpic_feature)
+    ;
+
+lib multi_shared_1
+    :
+        multi_shared1.cpp
+        static_boost_serialization
+    :
+        <link>shared
+    ;
+
+lib multi_shared_2
+    :
+        multi_shared2.cpp
+        static_boost_serialization
+    :
+        <link>shared
     ;
 
 test-suite "serialization" :
@@ -141,6 +172,8 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ test-bsl-run test_dll_simple   : : dll_a : ]
         # [ test-bsl-run test_dll_plugin : : dll_derived2 : <link>static:<build>no <target-os>linux:<linkflags>-ldl ]
 
+        # Tests using shared libraries which are linked against static boost. Hence ignore for shared boost build
+        [ test-bsl-run test_multi_shared_lib : : multi_shared_1 multi_shared_2 : <link>shared:<build>no ]
         [ test-bsl-run test_private_ctor ]
         [ test-bsl-run test_reset_object_address : A ]
         [ test-bsl-run test_void_cast ]
