@@ -36,6 +36,8 @@ polymorphic_derived2::~polymorphic_derived2(){}
 
 #include <boost/archive/polymorphic_oarchive.hpp>
 #include <boost/archive/polymorphic_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 
 template
 POLYMORPHIC_DERIVED2_DLL_DECL void polymorphic_derived2::serialize(
@@ -53,3 +55,7 @@ BOOST_SERIALIZATION_MWERKS_BASE_AND_DERIVED(polymorphic_base, polymorphic_derive
 
 // note: export has to be AFTER #includes for all archive classes
 BOOST_CLASS_EXPORT_IMPLEMENT(polymorphic_derived2)
+
+// This is required by test_dll_plugin
+#include <boost/serialization/factory.hpp>
+BOOST_SERIALIZATION_FACTORY_0(polymorphic_derived2)

@@ -38,6 +38,7 @@ install:
   - git submodule init libs/container_hash
   - git submodule init libs/core
   - git submodule init libs/detail
+  - git submodule init libs/dll
   - git submodule init libs/filesystem
   - git submodule init libs/function
   - git submodule init libs/functional
